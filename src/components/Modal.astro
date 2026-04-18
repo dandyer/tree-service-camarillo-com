@@ -1,0 +1,88 @@
+---
+import { business } from '@data/business';
+import { services } from '@data/services';
+---
+
+<dialog id="contact-modal" class="w-full max-w-lg rounded-2xl shadow-2xl p-0 backdrop:bg-black/60 backdrop:backdrop-blur-sm">
+  <div class="bg-[--color-brand-dark] px-6 py-4 flex items-center justify-between rounded-t-2xl">
+    <div>
+      <h2 class="text-white font-bold text-xl">Get Your Free Estimate</h2>
+      <p class="text-blue-200 text-sm">Call, text, or fill out the form below</p>
+    </div>
+    <button onclick="document.getElementById('contact-modal').close()"
+            class="text-white/70 hover:text-white text-2xl leading-none">&times;</button>
+  </div>
+
+  <!-- Call / Text buttons -->
+  <div class="flex gap-3 px-6 pt-5">
+    <a href={`tel:${business.phoneRaw}`}
+       class="flex-1 flex items-center justify-center gap-2 bg-[--color-brand] hover:bg-[--color-brand-dark] text-white font-bold py-3 rounded-lg transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+      </svg>
+      Call Us
+    </a>
+    <a href={`sms:${business.phoneRaw}`}
+       class="flex-1 flex items-center justify-center gap-2 bg-[--color-cta] hover:bg-[--color-cta-dark] text-white font-bold py-3 rounded-lg transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+      </svg>
+      Text Us
+    </a>
+  </div>
+
+  <div class="flex items-center gap-3 px-6 py-4">
+    <hr class="flex-1 border-gray-200" />
+    <span class="text-sm text-[--color-muted]">or submit a request</span>
+    <hr class="flex-1 border-gray-200" />
+  </div>
+
+  <!-- Form -->
+  {business.formspreeId ? (
+    <form action={`https://formspree.io/f/${business.formspreeId}`} method="POST" enctype="multipart/form-data"
+          class="px-6 pb-6 space-y-4">
+      <input type="hidden" name="_subject" value={`New estimate request — ${business.name}`} />
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm font-medium text-[--color-ink] mb-1">Your Name *</label>
+          <input type="text" name="name" required
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[--color-brand]" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-[--color-ink] mb-1">Phone *</label>
+          <input type="tel" name="phone" required
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[--color-brand]" />
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-[--color-ink] mb-1">Service Needed</label>
+        <select name="service" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[--color-brand]">
+          <option value="">-- Select a service --</option>
+          {services.map(s => <option value={s.name}>{s.name}</option>)}
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-[--color-ink] mb-1">Describe Your Project *</label>
+        <textarea name="description" required rows={3}
+                  placeholder="Tell us what you need done, any details that might help..."
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[--color-brand] resize-none"></textarea>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-[--color-ink] mb-1">Photo (optional)</label>
+        <input type="file" name="photo" accept="image/*"
+               class="w-full text-sm text-[--color-muted] file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-[--color-brand-light] file:text-[--color-brand] file:font-medium" />
+      </div>
+      <button type="submit"
+              class="w-full bg-[--color-brand] hover:bg-[--color-brand-dark] text-white font-bold py-3 rounded-lg transition">
+        Submit Request
+      </button>
+    </form>
+  ) : (
+    <div class="px-6 pb-6 text-center text-[--color-muted] text-sm">
+      <p>{business.phone}</p>
+      <p class="mt-1">{business.hours.weekdays} &middot; {business.hours.saturday}</p>
+    </div>
+  )}
+</dialog>

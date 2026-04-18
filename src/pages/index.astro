@@ -1,0 +1,185 @@
+---
+import Base from '@layouts/Base.astro';
+import { business } from '@data/business';
+import { content } from '@data/content';
+import { services } from '@data/services';
+import { locations } from '@data/locations';
+import { reviews } from '@data/reviews';
+---
+
+<Base title={`${business.name} | ${business.address.city} ${business.niche} | ${business.phone}`}
+     description={content.hero.subheading || business.tagline}>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-[--color-brand-dark] to-[--color-brand] text-white py-20 lg:py-28">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-blue-200 text-sm font-medium uppercase tracking-wider mb-3">{content.hero.serviceArea}</p>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">{content.hero.heading}</h1>
+      <p class="text-blue-100 text-xl max-w-2xl mx-auto mb-8">{content.hero.subheading}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`tel:${business.phoneRaw}`}
+           class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition">
+          {business.phone}
+        </a>
+        <button onclick="document.getElementById('contact-modal').showModal()"
+                class="bg-[--color-cta] hover:bg-[--color-cta-dark] text-white font-bold text-lg px-8 py-4 rounded-xl transition">
+          {content.cta.buttonText}
+        </button>
+      </div>
+      <p class="text-blue-200 text-sm mt-4">{business.jobsCompleted}+ jobs completed &middot; {business.satisfaction}% satisfaction</p>
+    </div>
+  </section>
+
+  <!-- Trust bar -->
+  <div class="bg-[--color-brand] text-white py-4">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-8 text-sm font-medium">
+      <span>&#10003; Licensed & Insured</span>
+      <span>&#10003; Free Estimates</span>
+      <span>&#10003; {business.experience}+ Years Experience</span>
+      <span>&#10003; {business.satisfaction}% Satisfaction Rate</span>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="py-16 lg:py-20 bg-[--color-surface]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-[--color-ink] mb-3">{content.services.heading}</h2>
+        <p class="text-[--color-muted] text-lg max-w-2xl mx-auto">{content.services.subheading}</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.map(s => (
+          <a href={`/services/${s.slug}`}
+             class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition group">
+            <h3 class="text-lg font-bold text-[--color-ink] mb-2 group-hover:text-[--color-brand]">{s.name}</h3>
+            <p class="text-[--color-muted] text-sm leading-relaxed">{s.description}</p>
+            <p class="text-[--color-brand] text-sm font-medium mt-3">Learn more &rarr;</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-[--color-ink] mb-3">{content.howItWorks.heading}</h2>
+      <p class="text-[--color-muted] mb-12">{content.howItWorks.subheading}</p>
+      <div class="grid sm:grid-cols-3 gap-8">
+        {content.howItWorks.steps.map((step, i) => (
+          <div>
+            <div class="w-12 h-12 rounded-full bg-[--color-brand-light] text-[--color-brand] font-bold text-xl flex items-center justify-center mx-auto mb-4">{i + 1}</div>
+            <h3 class="font-bold text-[--color-ink] mb-2">{step.title}</h3>
+            <p class="text-[--color-muted] text-sm">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  {reviews.length > 0 && (
+    <section class="py-16 lg:py-20 bg-[--color-surface]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-[--color-ink] text-center mb-10">What Our Customers Say</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reviews.slice(0, 6).map(r => (
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <div class="text-yellow-400 text-lg mb-3">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="text-[--color-ink] text-sm leading-relaxed mb-4">"{r.text}"</p>
+              <p class="font-bold text-[--color-ink] text-sm">{r.name}</p>
+              <p class="text-[--color-muted] text-xs">{r.time}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Why Us -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-[--color-ink] text-center mb-10">{content.whyUs.heading}</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {content.whyUs.items.map(item => (
+          <div class="flex gap-3">
+            <div class="w-8 h-8 rounded-full bg-[--color-brand-light] text-[--color-brand] flex items-center justify-center flex-shrink-0 mt-0.5">&#10003;</div>
+            <div>
+              <h3 class="font-bold text-[--color-ink] mb-1">{item.title}</h3>
+              <p class="text-[--color-muted] text-sm">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Owner quote -->
+  <section class="py-16 bg-[--color-brand-light]">
+    <div class="max-w-2xl mx-auto px-4 text-center">
+      <blockquote class="text-2xl font-medium text-[--color-ink] italic mb-4">
+        "{content.about.ownerQuote}"
+      </blockquote>
+      <p class="font-bold text-[--color-ink]">{business.owner.name}</p>
+      <p class="text-[--color-muted] text-sm">{business.owner.title}, {business.name}</p>
+      <a href="/about" class="text-[--color-brand] font-medium text-sm hover:underline mt-2 inline-block">About us &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Service Areas -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-[--color-ink] mb-3">{content.serviceAreas.heading}</h2>
+        <p class="text-[--color-muted]">{content.serviceAreas.subheading}</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {locations.map(l => (
+          <a href={`/locations/${l.slug}`}
+             class="bg-[--color-surface] rounded-lg px-4 py-3 text-sm font-medium text-[--color-ink] hover:bg-[--color-brand-light] hover:text-[--color-brand] transition text-center">
+            {l.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {content.faq.length > 0 && (
+    <section class="py-16 lg:py-20 bg-[--color-surface]">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-[--color-ink] text-center mb-10">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {content.faq.map(f => (
+            <details class="bg-white rounded-xl border border-gray-100 px-6 py-4 group">
+              <summary class="font-semibold text-[--color-ink] cursor-pointer list-none flex justify-between items-center">
+                {f.q}
+                <span class="text-[--color-brand] ml-4 group-open:rotate-180 transition-transform">&#8964;</span>
+              </summary>
+              <p class="text-[--color-muted] text-sm mt-3 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA -->
+  <section class="py-16 bg-[--color-brand-dark] text-white text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-3">{content.cta.heading}</h2>
+      <p class="text-blue-200 mb-8">{content.cta.subheading}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`tel:${business.phoneRaw}`}
+           class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition">
+          {business.phone}
+        </a>
+        <button onclick="document.getElementById('contact-modal').showModal()"
+                class="bg-[--color-cta] hover:bg-[--color-cta-dark] text-white font-bold text-lg px-8 py-4 rounded-xl transition">
+          {content.cta.buttonText}
+        </button>
+      </div>
+    </div>
+  </section>
+
+</Base>

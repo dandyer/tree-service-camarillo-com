@@ -1,0 +1,94 @@
+---
+import Base from '@layouts/Base.astro';
+import { business } from '@data/business';
+import { services, getServiceBySlug } from '@data/services';
+
+export function getStaticPaths() {
+  return services.map(s => ({ params: { slug: s.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = getServiceBySlug(slug!)!;
+
+const faqSchema = service.faq.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: service.faq.map(f => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a }
+  }))
+} : undefined;
+---
+
+<Base title={service.metaTitle}
+     description={service.metaDescription}
+     canonical={`${business.website}/services/${service.slug}`}
+     schema={faqSchema}>
+
+  <section class="bg-gradient-to-br from-[--color-brand-dark] to-[--color-brand] text-white py-16 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <p class="text-blue-200 text-sm mb-2">{business.name}</p>
+      <h1 class="text-4xl font-bold mb-4">{service.heroHeading}</h1>
+      <p class="text-blue-100 text-lg mb-6">{service.heroSubheading}</p>
+      <a href={`tel:${business.phoneRaw}`}
+         class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition inline-block">
+        {business.phone}
+      </a>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-lg max-w-none text-[--color-ink]">
+        {service.content.split('\n\n').map(p => <p class="mb-4 text-[--color-muted] leading-relaxed">{p}</p>)}
+      </div>
+      {service.features.length > 0 && (
+        <div class="mt-8 bg-[--color-surface] rounded-xl p-6">
+          <h2 class="font-bold text-[--color-ink] text-lg mb-4">What's Included</h2>
+          <ul class="space-y-2">
+            {service.features.map(f => (
+              <li class="flex items-start gap-2 text-sm text-[--color-ink]">
+                <span class="text-[--color-cta] font-bold mt-0.5">&#10003;</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {service.faq.length > 0 && (
+    <section class="py-16 bg-[--color-surface]">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl font-bold text-[--color-ink] mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+          {service.faq.map(f => (
+            <details class="bg-white rounded-xl border border-gray-100 px-6 py-4">
+              <summary class="font-semibold text-[--color-ink] cursor-pointer list-none">{f.q}</summary>
+              <p class="text-[--color-muted] text-sm mt-3 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="py-12 bg-[--color-brand-dark] text-white text-center">
+    <div class="max-w-xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-2">Get a Free Estimate</h2>
+      <p class="text-blue-200 mb-6">{business.address.city}, CA &middot; {business.hours.weekdays}</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={`tel:${business.phoneRaw}`} class="bg-white text-[--color-brand] font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition">
+          Call {business.phone}
+        </a>
+        <button onclick="document.getElementById('contact-modal').showModal()"
+                class="bg-[--color-cta] text-white font-bold px-6 py-3 rounded-xl hover:bg-[--color-cta-dark] transition">
+          Text or Email Us
+        </button>
+      </div>
+    </div>
+  </section>
+
+</Base>

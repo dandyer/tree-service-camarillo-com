@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import { business } from '@data/business';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Modal from '@components/Modal.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  schema?: object;
+}
+
+const { title, description, canonical = business.website, schema } = Astro.props;
+const schemaJson = schema ? JSON.stringify(schema).replace(/</g, '\\u003c') : null;
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "ProfessionalService"],
+  name: business.name,
+  url: business.website,
+  telephone: business.phone,
+  description: business.tagline,
+  foundingDate: String(business.yearEstablished),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: business.address.city,
+    addressRegion: business.address.stateCode,
+    postalCode: business.address.zip,
+    addressCountry: "US",
+  },
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "07:00", closes: "18:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "08:00", closes: "16:00" },
+  ],
+  priceRange: "$$",
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c')} />
+    {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
+  </head>
+  <body class="bg-white text-[--color-ink] font-sans">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <Modal />
+  </body>
+</html>

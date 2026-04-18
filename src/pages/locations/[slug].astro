@@ -1,0 +1,60 @@
+---
+import Base from '@layouts/Base.astro';
+import { business } from '@data/business';
+import { services } from '@data/services';
+import { locations, getLocationBySlug } from '@data/locations';
+
+export function getStaticPaths() {
+  return locations.map(l => ({ params: { slug: l.slug } }));
+}
+
+const { slug } = Astro.params;
+const location = getLocationBySlug(slug!)!;
+---
+
+<Base title={`${business.niche.replace(/\b\w/g,c=>c.toUpperCase())} in ${location.name} CA | ${business.name}`}
+     description={`Professional ${business.niche} in ${location.name}, CA. ${business.name} — ${business.jobsCompleted}+ jobs. Call ${business.phone}.`}
+     canonical={`${business.website}/locations/${location.slug}`}>
+
+  <section class="bg-gradient-to-br from-[--color-brand-dark] to-[--color-brand] text-white py-16 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-4">{business.niche.replace(/\b\w/g,c=>c.toUpperCase())} in {location.name}, CA</h1>
+      <p class="text-blue-100 text-lg mb-6">{location.description}</p>
+      <a href={`tel:${business.phoneRaw}`}
+         class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition inline-block">
+        {business.phone}
+      </a>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      {location.content.split('\n\n').map(p => <p class="mb-4 text-[--color-muted] leading-relaxed">{p}</p>)}
+    </div>
+  </section>
+
+  <section class="py-16 bg-[--color-surface]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-[--color-ink] mb-6">Services in {location.name}</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {services.map(s => (
+          <a href={`/services/${s.slug}`} class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md border border-gray-100 transition group">
+            <h3 class="font-bold text-[--color-ink] mb-1 group-hover:text-[--color-brand]">{s.name}</h3>
+            <p class="text-[--color-muted] text-sm">{s.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-12 bg-[--color-brand-dark] text-white text-center">
+    <div class="max-w-xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Serving {location.name} &amp; Surrounding Areas</h2>
+      <a href={`tel:${business.phoneRaw}`}
+         class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition inline-block">
+        {business.phone}
+      </a>
+    </div>
+  </section>
+
+</Base>

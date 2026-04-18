@@ -1,0 +1,32 @@
+---
+import Base from '@layouts/Base.astro';
+import { business } from '@data/business';
+import { locations } from '@data/locations';
+---
+
+<Base title={`${business.niche.replace(/\b\w/g,c=>c.toUpperCase())} Near You | ${business.name}`}
+     description={`${business.name} serves ${business.serviceArea}. Call ${business.phone} for a free estimate.`}
+     canonical={`${business.website}/locations`}>
+
+  <section class="bg-[--color-brand-dark] text-white py-16 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <h1 class="text-4xl font-bold mb-4">Service Areas</h1>
+      <p class="text-blue-200 text-lg">{business.serviceArea}</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-[--color-surface]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {locations.map(l => (
+          <a href={`/locations/${l.slug}`} class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition group">
+            <h2 class="text-xl font-bold text-[--color-ink] mb-2 group-hover:text-[--color-brand]">{l.name}, CA</h2>
+            <p class="text-[--color-muted] text-sm mb-3">{l.description}</p>
+            <p class="text-[--color-brand] text-sm font-medium">View services &rarr;</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

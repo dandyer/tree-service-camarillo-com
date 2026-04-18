@@ -1,0 +1,42 @@
+---
+import Base from '@layouts/Base.astro';
+import { business } from '@data/business';
+import { blogPosts, getBlogPostBySlug } from '@data/blog';
+
+export function getStaticPaths() {
+  return blogPosts.map(p => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = getBlogPostBySlug(slug!)!;
+---
+
+<Base title={post.metaTitle}
+     description={post.metaDescription}
+     canonical={`${business.website}/blog/${post.slug}`}>
+
+  <section class="bg-[--color-brand-dark] text-white py-16 text-center">
+    <div class="max-w-3xl mx-auto px-4">
+      <p class="text-blue-200 text-sm mb-3">{post.publishedDate}</p>
+      <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+      <p class="text-blue-100 text-lg">{post.excerpt}</p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg max-w-none">
+      {post.content.split('\n\n').map(p => <p class="mb-5 text-[--color-muted] leading-relaxed">{p}</p>)}
+    </div>
+  </section>
+
+  <section class="py-12 bg-[--color-brand-dark] text-white text-center">
+    <div class="max-w-xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Need {business.niche.replace(/\b\w/g,c=>c.toUpperCase())} Help?</h2>
+      <a href={`tel:${business.phoneRaw}`}
+         class="bg-white text-[--color-brand] font-bold text-xl px-8 py-4 rounded-xl hover:bg-blue-50 transition inline-block">
+        {business.phone}
+      </a>
+    </div>
+  </section>
+
+</Base>
