@@ -8,28 +8,28 @@ import { services } from '@data/services';
     <div class="flex items-center justify-between h-18 py-3">
 
       <!-- Brand -->
-      <a href="/" class="text-lg font-bold text-[--color-brand-dark] leading-tight max-w-xs">
+      <a href="/" class="text-lg font-bold text-(--color-brand-dark) leading-tight max-w-xs">
         {business.name}
       </a>
 
       <!-- Desktop: phone + CTA -->
       <div class="hidden md:flex items-center gap-6">
         <a href={`tel:${business.phoneRaw}`}
-           class="text-2xl font-bold text-[--color-brand] hover:text-[--color-brand-dark] tracking-tight">
+           class="text-2xl font-bold text-(--color-brand) hover:text-(--color-brand-dark) tracking-tight">
           {business.phone}
         </a>
         <button onclick="document.getElementById('contact-modal').showModal()"
-                class="bg-[--color-cta] hover:bg-[--color-cta-dark] text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                class="bg-(--color-cta) hover:bg-(--color-cta-dark) text-white font-semibold px-5 py-2.5 rounded-lg transition">
           Free Estimate
         </button>
       </div>
 
       <!-- Mobile: phone only, hamburger -->
       <div class="flex md:hidden items-center gap-3">
-        <a href={`tel:${business.phoneRaw}`} class="text-lg font-bold text-[--color-brand]">
+        <a href={`tel:${business.phoneRaw}`} class="text-lg font-bold text-(--color-brand)">
           {business.phone}
         </a>
-        <button id="mobile-menu-btn" aria-label="Menu" class="p-2 text-[--color-ink]">
+        <button id="mobile-menu-btn" aria-label="Menu" class="p-2 text-(--color-ink)">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -38,12 +38,12 @@ import { services } from '@data/services';
     </div>
 
     <!-- Nav bar -->
-    <nav class="hidden md:flex items-center gap-6 pb-2 text-sm font-medium text-[--color-muted]">
-      <a href="/" class="hover:text-[--color-brand]">Home</a>
-      <a href="/services" class="hover:text-[--color-brand]">Services</a>
-      <a href="/locations" class="hover:text-[--color-brand]">Service Areas</a>
-      <a href="/about" class="hover:text-[--color-brand]">About</a>
-      <a href="/blog" class="hover:text-[--color-brand]">Blog</a>
+    <nav class="hidden md:flex items-center gap-6 pb-2 text-sm font-medium text-(--color-muted)">
+      <a href="/" class="hover:text-(--color-brand)">Home</a>
+      <a href="/services" class="hover:text-(--color-brand)">Services</a>
+      <a href="/locations" class="hover:text-(--color-brand)">Service Areas</a>
+      <a href="/about" class="hover:text-(--color-brand)">About</a>
+      <a href="/blog" class="hover:text-(--color-brand)">Blog</a>
     </nav>
   </div>
 
@@ -56,7 +56,7 @@ import { services } from '@data/services';
     <a href="/blog" class="block py-2 font-medium">Blog</a>
     <div class="pt-2 border-t">
       <button onclick="document.getElementById('contact-modal').showModal()"
-              class="w-full bg-[--color-cta] text-white font-semibold py-3 rounded-lg">
+              class="w-full bg-(--color-cta) text-white font-semibold py-3 rounded-lg">
         Get Free Estimate
       </button>
     </div>

@@ -8,26 +8,26 @@ import { blogPosts } from '@data/blog';
      description={`Expert ${business.niche} tips, guides, and advice from ${business.name} in ${business.address.city}, CA.`}
      canonical={`${business.website}/blog`}>
 
-  <section class="bg-[--color-brand-dark] text-white py-16 text-center">
+  <section class="bg-(--color-brand-dark) text-white py-16 text-center">
     <div class="max-w-3xl mx-auto px-4">
       <h1 class="text-4xl font-bold mb-4">Tips & Guides</h1>
       <p class="text-blue-200 text-lg">Expert {business.niche} advice from {business.name}.</p>
     </div>
   </section>
 
-  <section class="py-16 bg-[--color-surface]">
+  <section class="py-16 bg-(--color-surface)">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {blogPosts.length === 0 ? (
-        <p class="text-center text-[--color-muted]">Posts coming soon.</p>
+        <p class="text-center text-(--color-muted)">Posts coming soon.</p>
       ) : (
         <div class="space-y-6">
           {blogPosts.map(p => (
             <a href={`/blog/${p.slug}`} class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition flex gap-6 group">
               <div class="flex-1">
-                <p class="text-[--color-muted] text-xs mb-2">{p.publishedDate}</p>
-                <h2 class="text-xl font-bold text-[--color-ink] mb-2 group-hover:text-[--color-brand]">{p.title}</h2>
-                <p class="text-[--color-muted] text-sm">{p.excerpt}</p>
-                <p class="text-[--color-brand] text-sm font-medium mt-3">Read more &rarr;</p>
+                <p class="text-(--color-muted) text-xs mb-2">{p.publishedDate}</p>
+                <h2 class="text-xl font-bold text-(--color-ink) mb-2 group-hover:text-(--color-brand)">{p.title}</h2>
+                <p class="text-(--color-muted) text-sm">{p.excerpt}</p>
+                <p class="text-(--color-brand) text-sm font-medium mt-3">Read more &rarr;</p>
               </div>
             </a>
           ))}

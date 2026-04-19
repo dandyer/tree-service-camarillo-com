@@ -54,7 +54,7 @@ const localBusinessSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c')} />
     {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
   </head>
-  <body class="bg-white text-[--color-ink] font-sans">
+  <body class="bg-white text-(--color-ink) font-sans">
     <Header />
     <main>
       <slot />
