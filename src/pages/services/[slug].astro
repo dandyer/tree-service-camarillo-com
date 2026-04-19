@@ -41,7 +41,7 @@ const faqSchema = service.faq.length > 0 ? {
   <section class="py-16 bg-white">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="prose prose-lg max-w-none text-[--color-ink]">
-        {service.content.split('\n\n').map(p => <p class="mb-4 text-[--color-muted] leading-relaxed">{p}</p>)}
+        {service.body.map(p => <p class="mb-4 text-[--color-muted] leading-relaxed">{p}</p>)}
       </div>
       {service.features.length > 0 && (
         <div class="mt-8 bg-[--color-surface] rounded-xl p-6">
