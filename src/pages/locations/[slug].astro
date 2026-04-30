@@ -14,7 +14,7 @@ const location = getLocationBySlug(slug!)!;
 
 <Base title={`${business.niche.replace(/\b\w/g,c=>c.toUpperCase())} in ${location.name} CA | ${business.name}`}
      description={`Professional ${business.niche} in ${location.name}, CA. ${business.name} — ${business.jobsCompleted}+ jobs. Call ${business.phone}.`}
-     canonical={`${business.website}/locations/${location.slug}`}>
+     canonical={`${business.website}/locations/${location.slug}/`}>
 
   <section class="bg-gradient-to-br from-(--color-brand-dark) to-(--color-brand) text-white py-16 text-center">
     <div class="max-w-3xl mx-auto px-4">
