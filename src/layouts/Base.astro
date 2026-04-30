@@ -53,6 +53,9 @@ const localBusinessSchema = {
     <meta property="og:url" content={canonical} />
     <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c')} />
     {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
+    {business.analyticsId && (
+      <script src="https://analyticlunch.com/t.js" data-id={business.analyticsId} defer />
+    )}
   </head>
   <body class="bg-white text-(--color-ink) font-sans">
     <Header />

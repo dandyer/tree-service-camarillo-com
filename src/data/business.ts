@@ -9,6 +9,7 @@ export interface Business {
   formspreeId: string;
   serviceArea: string;
   licenseNumber: string;
+  analyticsId: string;
 }
 
 export const business: Business = {
@@ -28,6 +29,7 @@ export const business: Business = {
   satisfaction: 99,
   social: { facebook: "", instagram: "", yelp: "" },
   formspreeId: "",
+  analyticsId: "site_fa7d4621",
   serviceArea: "Camarillo, Oxnard, Ventura, Thousand Oaks, Simi Valley, Moorpark, Newbury Park",
   licenseNumber: "#978214",
 };
